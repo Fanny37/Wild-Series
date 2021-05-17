@@ -1,0 +1,16 @@
+body {
+    background-color: lightgray;
+}
+
+// customize some Bootstrap variables
+$primary: darken(#428bca, 20%);
+
+$theme-colors: (
+  "primary": rgb(90, 90, 90),
+  "secondary": #ffc5f7,
+  "black": black,
+  "white": white,
+);
+
+// the ~ allows you to reference things in node_modules
+@import "~bootstrap/scss/bootstrap";
