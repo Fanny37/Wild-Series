@@ -19,17 +19,18 @@ class ProgramRepository extends ServiceEntityRepository
         parent::__construct($registry, Program::class);
     }
 
-    // /**
-    //  * @return Program[] Returns an array of Program objects
-    //  */
+    /**
+    * @return Program[] Returns an array of Program objects
+    */
+    
     /*
-    public function findByExampleField($value)
+    public function findByCategoryId($categoryId)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('p.category_id = :val')
+            ->setParameter('val', $categoryId)
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(3)
             ->getQuery()
             ->getResult()
         ;
