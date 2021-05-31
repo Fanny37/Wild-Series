@@ -20,7 +20,7 @@ class Season
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity=program::class, inversedBy="seasons")
+     * @ORM\ManyToOne(targetEntity=Program::class, inversedBy="seasons")
      */
     private $programs;
 
@@ -54,15 +54,14 @@ class Season
         return $this->id;
     }
 
-    public function getProgramId(): ?program
+    public function getPrograms(): ?Program
     {
         return $this->programs;
     }
 
-    public function setProgramId(?program $programs): self
+    public function setPrograms(?Program $programs): self
     {
         $this->programs = $programs;
-
         return $this;
     }
 

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+
 /**
  * @ORM\Entity(repositoryClass=ProgramRepository::class)
  */
@@ -127,7 +128,7 @@ class Program
     {
         if (!$this->seasons->contains($season)) {
             $this->seasons[] = $season;
-            $season->setProgramId($this);
+            $season->setPrograms($this);
         }
 
         
@@ -138,8 +139,8 @@ class Program
     {
         if ($this->seasons->removeElement($season)) {
             // set the owning side to null (unless already changed)
-            if ($season->getProgramId() === $this) {
-                $season->setProgramId(null);
+            if ($season->getPrograms() === $this) {
+                $season->setPrograms(null);
             }
         }
 
