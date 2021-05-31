@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Title</th>
+                <th>Program</th>
                 <th>Season</th>
                 <th>Number</th>
                 <th>Synopsis</th>
@@ -21,6 +22,7 @@
             <tr>
                 <td>{{ episode.id }}</td>
                 <td>{{ episode.title }}</td>
+                <td>{{ episode.season.programs.title }}</td>
                 <td>{{ episode.season.number }}</td>
                 <td>{{ episode.number }}</td>
                 <td>{{ episode.synopsis }}</td>

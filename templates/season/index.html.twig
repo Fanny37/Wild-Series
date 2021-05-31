@@ -20,9 +20,7 @@
         {% for season in seasons %}
             <tr>
                 <td>{{ season.id }}</td>
-                {% if season.programs.title is defined %}
                 <td>{{ season.programs.title }}</td>
-                {% endif %}
                 <td>{{ season.number }}</td>
                 <td>{{ season.year }}</td>
                 <td>{{ season.description }}</td>
