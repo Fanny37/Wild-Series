@@ -12,5 +12,10 @@ $theme-colors: (
   "white": white,
 );
 
+/* #program_actors {
+  display: flex;
+  justify-content: space-around;
+} */
+
 // the ~ allows you to reference things in node_modules
 @import "~bootstrap/scss/bootstrap";

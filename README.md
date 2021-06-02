@@ -4,3 +4,4 @@ Lien vidéo pour challenge 12 : https://www.loom.com/share/c434a440985642b1a423a
 Lien vidéo pour challenge 13 : https://www.loom.com/share/490fc69a05bb4bdeb2ee54013df3ef74
 Lien vidéo pour challenge 14 : https://www.loom.com/share/42ccd71f6b5d430b9ee3b4e6003e9cb6
 Lien vidéo pour challenge 15 : https://www.loom.com/share/eb5dcd26a3ca4351996a1bbdcb908852
+Lien vidéo pour challenge 16 : https://www.loom.com/share/5c57ae34c496424bbd8ecc4dc92c47e9
