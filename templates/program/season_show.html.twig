@@ -8,14 +8,14 @@
     <h2>Liste des épisodes</h2>
     <ul>
     {% for episode in episodes %}
-       <a href="{{ path("program_episode_show", { programId: program.id, seasonId: season.id, episodeId: episode.id }) }}"><li>Episode {{ episode.number }} : {{ episode.title }}</li></a>
-    {% else %}
+       <a href="{{ path("program_episode_show", { slug: program.slug, seasonId: season.id, episodeSlug: episode.slug }) }}"><li>Episode {{ episode.number }} : {{ episode.title }}</li></a>
+      {% else %}
       <li>Aucune série trouvée.</li>
     {% endfor %} 
     </ul>
 
     
-    <a href="{{ path("program_show", { id: program.id }) }}">
+    <a href="{{ path("program_show", { slug: program.slug }) }}">
     Retour à la fiche du programme
     </a>
 {% endblock %}
