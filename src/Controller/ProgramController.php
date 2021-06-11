@@ -12,7 +12,8 @@ use App\Form\ProgramType;
 use App\Service\Slugify;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
 * @Route("/programs", name="program_")
@@ -41,7 +42,7 @@ class ProgramController extends AbstractController
      *
      * @Route("/new", name="new")
      */
-    public function new(Request $request, Slugify $slugify) : Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer) : Response
     {
         // Create a new Program Object
         $program = new Program();
@@ -60,6 +61,15 @@ class ProgramController extends AbstractController
             $entityManager->persist($program);
             // Flush the persisted object
             $entityManager->flush();
+
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to('fanny-lemaitre-hermenier_student2021@wilder.school')
+                ->subject('Une nouvelle série vient d\'être publiée !')
+                ->html($this->renderView('Program/newProgramEmail.html.twig', ['program' => $program]));
+            
+            $mailer->send($email);
+
             // Finally redirect to programs list
             return $this->redirectToRoute('program_index');
             // And redirect to a route that display the result

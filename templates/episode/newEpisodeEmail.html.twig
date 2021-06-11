@@ -1,0 +1,8 @@
+{% extends 'layoutEmail.html.twig' %}
+
+{% block title %}Nouvel épisode {{ episode.title }}{% endblock %}
+{% block body %}
+    <p>Bonjour ! <br>Le nouvel épisode {{ episode.title }} n°{{ episode.number }} de la série {{ episode.season.programs.title }} vient de sortir.</p>
+    <p>Résumé : {{episode.synopsis }}
+    <p>Vous trouverez plus d'informations en cliquant <a href="{{ path('episode_show', {'slug': episode.slug}) }}">ici</a></p>
+{% endblock %}
