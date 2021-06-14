@@ -25,6 +25,20 @@
             </tr>
         </tbody>
     </table>
+    {% if app.user %}
+        <h2>Ajouter un commentaire</h2>
+        {{ include('episode/_commentForm.html.twig') }}
+        <div>
+            <h2>Commentaires laissés</h2>
+            <ul>
+                {% for comment in comments %}
+                <li>{{ comment.comment }} - {{ comment.rate }} </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <a href="{{ path('app_login') }}">Se connecter</a>
+    {% endif %}
 
     <a href="{{ path('episode_index') }}">back to list</a>
 
