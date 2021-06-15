@@ -12,8 +12,8 @@
     </div>
     {% for season in seasons %}
       <div>
-         <h2>{{ loop.index }} / Saison n° : {{ season.number }} - {{ season.year }}</h2>
-         <a href="{{ path("program_season_show", { slug: program.slug, seasonId: season.id }) }}">Voir la fiche</a>
+        <h2>{{ loop.index }} / Saison n° : {{ season.number }} - {{ season.year }}</h2>
+        <a href="{{ path("program_season_show", { slug: program.slug, seasonId: season.id }) }}">Voir la fiche </a>
       </div>
    {% else %}
         Aucune saison trouvée.
@@ -28,8 +28,18 @@
           <li>Aucun acteur pour cette série</li>
       {% endfor %}
   </ul>
-
-  <a href="{{ path('program_index') }}">
-    Retour à la liste des programmes
-</a>
+  {% if app.user %}
+    {% if is_granted("ROLE_ADMIN") or app.user.id == program.owner.id %}
+    <div>
+      <a href="{{ path("program_edit", {'slug': program.slug}) }}">
+        Modifier la série
+      </a>
+    </div>
+    {% endif %}
+  {% endif %}
+  <div>
+    <a href="{{ path('program_index') }}">
+      Retour à la liste des programmes
+    </a>
+  </div>
 {% endblock %}

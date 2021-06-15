@@ -32,7 +32,10 @@
             <h2>Commentaires laissés</h2>
             <ul>
                 {% for comment in comments %}
-                <li>{{ comment.comment }} - {{ comment.rate }} </li>
+                    <li>{{ comment.comment }} - {{ comment.rate }} </li>
+                    {% if is_granted("ROLE_ADMIN") or app.user.id == comment.author.id %} 
+                        {{ include('episode/_delete_comment_form.html.twig') }}
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>

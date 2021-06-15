@@ -16,6 +16,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use App\Entity\Program;
 use App\Repository\CommentRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/episode")
@@ -48,9 +49,6 @@ class EpisodeController extends AbstractController
             $entityManager->persist($episode);
             $entityManager->flush();
 
-            $season = $episode->getSeason();
-            $program = $season->getPrograms();
-
             $email = (new Email())
                 ->from($this->getParameter('mailer_from'))
                 ->to($this->getParameter('mailer_to'))
@@ -64,31 +62,6 @@ class EpisodeController extends AbstractController
 
         return $this->render('episode/new.html.twig', [
             'episode' => $episode,
-            'form' => $form->createView(),
-        ]);
-    }
-
-    /**
-     * @Route("/{slug}", name="episode_show", methods={"GET", "POST"})
-     */
-    public function show(Request $request, Episode $episode, CommentRepository $comments): Response
-    {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setAuthor($this->getUser());
-            $comment->setEpisode($episode);
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($comment);
-            $entityManager->flush();
-        }
-        $comments = $comments->findAll();
-
-        return $this->render('episode/show.html.twig', [
-            'episode' => $episode,
-            'comments' => $comments,
             'form' => $form->createView(),
         ]);
     }
@@ -116,7 +89,38 @@ class EpisodeController extends AbstractController
     }
 
     /**
+     * @Route("/show/{slug}", name="episode_show", methods={"GET", "POST"})
+     */
+    public function show(Request $request, Episode $episode, CommentRepository $comments): Response
+    {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAuthor($this->getUser());
+            $comment->setEpisode($episode);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
+
+        $comments = $comments
+        ->findBy([
+            'episode' => $episode->getId()
+        ]);
+
+
+        return $this->render('episode/show.html.twig', [
+            'episode' => $episode,
+            'comments' => $comments,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="episode_delete", methods={"POST"})
+     * 
      */
     public function delete(Request $request, Episode $episode): Response
     {
@@ -128,4 +132,20 @@ class EpisodeController extends AbstractController
 
         return $this->redirectToRoute('episode_index');
     }
+
+    /**
+     * @Route("/comment/{id}", name="episode_comment_delete", methods={"POST"})
+     * 
+     */
+    public function deleteComment(Request $request, Comment $comment): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('episode_index');
+    }
+
 }

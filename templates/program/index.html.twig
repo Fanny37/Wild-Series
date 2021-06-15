@@ -8,13 +8,28 @@
       <div>
          <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
          <p>{{ program.summary }}</p>
-         <a href="{{ path("program_show", { slug: program.slug }) }}">Voir la fiche</a>
+         <a href="{{ path("program_show", { slug: program.slug }) }}">Voir la fiche </a>
+         {% if app.user %}
+            {% if is_granted("ROLE_ADMIN") or app.user.id == program.owner.id %}
+            <div>
+               <a href="{{ path("program_edit", {'slug': program.slug}) }}">
+                  Modifier la série
+               </a>
+            </div>
+            {% endif %}
+         {% endif %}
       </div>
    {% else %}
         Aucune série trouvée.
    {% endfor %}
-
-   <a href="{{ path('app_index') }}">
-      Retour à l'accueil
-  </a>
+   <div>
+      <a href="{{ path("program_new") }}">
+         Ajouter une série
+      </a>
+   </div>
+   <div>
+      <a href="{{ path('app_index') }}">
+         Retour à l'accueil
+      </a>
+   </div>
 {% endblock %}
