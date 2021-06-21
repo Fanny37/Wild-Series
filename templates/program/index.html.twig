@@ -4,31 +4,56 @@
 
 {% block body %}
    <h1>Toutes les séries</h1>
+   <div class="container-fluid">
+      {{ form_start(form) }}
+         {{ form_widget(form) }}
+          <input type='submit' value='Search a program' class="form-control-m">
+      {{ form_end(form) }}
+  </div>
    <div class="container mx-auto mt-5">
       <div class="row">
          {% for program in programs %}
-         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-1 text-center pt-3">
-            <div class="card-group">
-               <a href="{{ path("program_show", { slug: program.slug }) }}">
-                  <img src="{{program.poster}}" class="card-img-top img-fluid" alt="{{program.title}}">
-               </a>
-               <div class="card-body">
-                  <h5 class="card-title nav-size">{{program.title}}</h5>
-                  <p class="card-text text-center"><i class="fas fa-film film-color"></i> {{program.category.name}}</p>
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-1 text-center pt-3">
+               <div class="card-group">
+                  <a href="{{ path("program_show", { slug: program.slug }) }}">
+                     <img src="{{program.poster}}" class="card-img-top img-fluid" alt="{{program.title}}">
+                  </a>
+                  <div class="card-body">
+                     <h5 class="card-title nav-size">{{program.title}}</h5>
+                     <p class="card-text text-center"><i class="fas fa-film film-color"></i> {{program.category.name}}</p>
+                  </div>
                </div>
             </div>
-         </div>
-         {% if app.user %}
-            {% if is_granted("ROLE_ADMIN") or app.user.id == program.owner.id %}
-            <div>
-               <a href="{{ path("program_edit", {'slug': program.slug}) }}">
-                  Modifier la série
-               </a>
-            </div>
+            {% if app.user %}
+               {% if is_granted("ROLE_ADMIN") or app.user.id == program.owner.id %}
+               <div>
+                  <a href="{{ path("program_edit", {'slug': program.slug}) }}">
+                     Modifier la série
+                  </a>
+               </div>
+               {% endif %}
             {% endif %}
-         {% endif %}
          {% else %}
-            Aucune série trouvée.
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-1 text-center pt-3">
+               <div class="card-group">
+                  <a href="{{ path("program_show", { slug: programs.slug }) }}">
+                     <img src="{{programs.poster}}" class="card-img-top img-fluid" alt="{{programs.title}}">
+                  </a>
+                  <div class="card-body">
+                     <h5 class="card-title nav-size">{{programs.title}}</h5>
+                     <p class="card-text text-center"><i class="fas fa-film film-color"></i> {{programs.category.name}}</p>
+                  </div>
+               </div>
+            </div>
+            {% if app.user %}
+               {% if is_granted("ROLE_ADMIN") or app.user.id == programs.owner.id %}
+               <div>
+                  <a href="{{ path("program_edit", {'slug': programs.slug}) }}">
+                     Modifier la série
+                  </a>
+               </div>
+               {% endif %}
+            {% endif %}
          {% endfor %}
       </div>
       <div>
