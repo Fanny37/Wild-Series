@@ -6,7 +6,7 @@
    <div >
         {% for program in programs %}
             <div>
-                <a href="{{ path("program_show", { id: program.id }) }}"><h1>{{ program.id }} / {{ program.title }}</h1></a>
+                <a href="{{ path("program_show", { slug: program.slug }) }}"><h1>{{ program.id }} / {{ program.title }}</h1></a>
             </div>
             <div>
                 <p>{{ program.summary }}</p>

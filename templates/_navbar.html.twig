@@ -14,17 +14,19 @@
       <li class="nav-item">
         <a class="nav-link" href="/categories/">Categories</a>
       </li>
+      {% if app.user %}
       <li class="nav-item">
-        <a class="nav-link" href="#">Register</a>
+        <a class="nav-link" href="{{ path('my_account') }}"> Mon compte</a>
       </li>
       <li class="nav-item">
-        {% if app.user %}
-          {{ app.user.email }}
-          <a class="nav-link" href="{{ path('app_logout') }}"> Se déconnecter</a>
-        {% else %}
-          <a class="nav-link" href="{{ path('app_login') }}"> Se connecter</a>
-        {% endif %}
+        {{ app.user.email }}
+        <a class="nav-link" href="{{ path('app_logout') }}"> Se déconnecter</a>
       </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_login') }}"> Se connecter</a>
+      </li>
+      {% endif %}
     </ul>
   </div>
 </nav>

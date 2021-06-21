@@ -4,4 +4,29 @@
 
    <h1>Bienvenue !</h1>
 
+   <h2>Les 3 dernières séries : </h2>
+
+   <div class="container mx-auto mt-5">
+        <div class="row">
+        {% for program in programs %}
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-xs-1 text-center pt-3">
+                <div class="card-group">
+                    <a href="{{ path("program_show", { slug: program.slug }) }}">
+                        <img src="{{program.poster}}" class="card-img-top img-fluid" alt="{{program.title}}">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title nav-size">{{program.title}}</h5>
+                        <p class="card-text text-center"><i class="fas fa-film film-color"></i> {{program.category.name}}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+            <div>
+            <a href="{{ path('app_index') }}">
+                Retour à l'accueil
+            </a>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
